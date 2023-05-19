@@ -137,6 +137,16 @@ To make discussions in Slack more organized:
 
 [More details](07-project/)
 
+## Installation
+
+We changed this project to use Poetry for dependency management. Make sure you have it installed by following the instructions [here](https://python-poetry.org/docs/#installation).
+
+To install the dependencies, run:
+
+```bash
+poetry install
+```
+
 ## Instructors
 
 - Cristian Martinez
