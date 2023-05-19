@@ -6,12 +6,12 @@ import model
 def read_text(file):
     test_directory = Path(__file__).parent
 
-    with open(test_directory / file, 'rt', encoding='utf-8') as f_in:
+    with open(test_directory / file, "rt", encoding="utf-8") as f_in:
         return f_in.read().strip()
 
 
 def test_base64_decode():
-    base64_input = read_text('data.b64')
+    base64_input = read_text("data.b64")
 
     actual_result = model.base64_decode(base64_input)
     expected_result = {
@@ -71,10 +71,10 @@ def test_predict():
 
 def test_lambda_handler():
     model_mock = ModelMock(10.0)
-    model_version = 'Test123'
+    model_version = "Test123"
     model_service = model.ModelService(model_mock, model_version)
 
-    base64_input = read_text('data.b64')
+    base64_input = read_text("data.b64")
 
     event = {
         "Records": [
@@ -88,13 +88,13 @@ def test_lambda_handler():
 
     actual_predictions = model_service.lambda_handler(event)
     expected_predictions = {
-        'predictions': [
+        "predictions": [
             {
-                'model': 'ride_duration_prediction_model',
-                'version': model_version,
-                'prediction': {
-                    'ride_duration': 10.0,
-                    'ride_id': 256,
+                "model": "ride_duration_prediction_model",
+                "version": model_version,
+                "prediction": {
+                    "ride_duration": 10.0,
+                    "ride_id": 256,
                 },
             }
         ]

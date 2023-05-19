@@ -12,7 +12,7 @@ MONGO_DATABASE = os.getenv("MONGO_DATABASE", "ride_prediction")
 LOGGED_MODEL = os.getenv("MODEL_FILE", "lin_reg.bin")
 MODEL_VERSION = os.getenv("MODEL_VERSION", "1")
 
-with open(LOGGED_MODEL, 'rb') as f_in:
+with open(LOGGED_MODEL, "rb") as f_in:
     dv, model = pickle.load(f_in)
 
 
@@ -29,10 +29,10 @@ def prepare_features(ride):
     """Function to prepare features before making prediction"""
 
     record = ride.copy()
-    record['PU_DO'] = '%s_%s' % (record['PULocationID'], record['DOLocationID'])
+    record["PU_DO"] = "%s_%s" % (record["PULocationID"], record["DOLocationID"])
 
     features = dv.transform([record])
-   
+
     return features, record
 
 
@@ -42,7 +42,6 @@ def save_db(record, pred_result):
     rec = record.copy()
     rec["prediction"] = pred_result[0]
     mongo_collection.insert_one(rec)
-
 
 
 @app.route("/", methods=["GET"])
@@ -62,6 +61,7 @@ def get_info():
                </div>"""
     return info
 
+
 @app.route("/predict-duration", methods=["POST"])
 def predict_duration():
     """Function to predict duration"""
@@ -72,20 +72,17 @@ def predict_duration():
     prediction = model.predict(features)
     ride_id = str(uuid.uuid4())
     pred_data = {
-            "ride_id": ride_id,
-            "PU_DO": record["PU_DO"],
-            "trip_distance": record["trip_distance"],
-            "status": 200,
-            "duration": prediction[0],
-            "model_version": MODEL_VERSION
-            }
+        "ride_id": ride_id,
+        "PU_DO": record["PU_DO"],
+        "trip_distance": record["trip_distance"],
+        "status": 200,
+        "duration": prediction[0],
+        "model_version": MODEL_VERSION,
+    }
 
     save_db(record, prediction)
 
-    result = {
-        "statusCode": 200,
-        "data" : pred_data
-        }
+    result = {"statusCode": 200, "data": pred_data}
 
     return jsonify(result)
 
