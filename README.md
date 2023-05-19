@@ -150,6 +150,18 @@ To make discussions in Slack more organized:
 
 
 
+Activate the virtual environment:
+
+```bash
+poetry shell
+```
+
+If you are running the project for the first time, you need to activate the `pre-commit` hooks:
+
+```bash
+pre-commit install
+```
+
 ## Instructors
 
 - Cristian Martinez
