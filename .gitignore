@@ -19,5 +19,7 @@ __pycache__/
 **.terraform.lock*
 **terraform.tfstate*
 
-
 .DS_Store
+
+# VS Code
+.vscode/
