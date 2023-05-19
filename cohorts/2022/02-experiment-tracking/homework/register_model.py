@@ -18,11 +18,11 @@ mlflow.set_experiment(EXPERIMENT_NAME)
 mlflow.sklearn.autolog()
 
 SPACE = {
-    'max_depth': scope.int(hp.quniform('max_depth', 1, 20, 1)),
-    'n_estimators': scope.int(hp.quniform('n_estimators', 10, 50, 1)),
-    'min_samples_split': scope.int(hp.quniform('min_samples_split', 2, 10, 1)),
-    'min_samples_leaf': scope.int(hp.quniform('min_samples_leaf', 1, 4, 1)),
-    'random_state': 42
+    "max_depth": scope.int(hp.quniform("max_depth", 1, 20, 1)),
+    "n_estimators": scope.int(hp.quniform("n_estimators", 10, 50, 1)),
+    "min_samples_split": scope.int(hp.quniform("min_samples_split", 2, 10, 1)),
+    "min_samples_leaf": scope.int(hp.quniform("min_samples_leaf", 1, 4, 1)),
+    "random_state": 42,
 }
 
 
@@ -49,7 +49,6 @@ def train_and_log_model(data_path, params):
 
 
 def run(data_path, log_top):
-
     client = MlflowClient()
 
     # retrieve the top_n model runs and log the models to MLflow
@@ -58,7 +57,7 @@ def run(data_path, log_top):
         experiment_ids=experiment.experiment_id,
         run_view_type=ViewType.ACTIVE_ONLY,
         max_results=log_top,
-        order_by=["metrics.rmse ASC"]
+        order_by=["metrics.rmse ASC"],
     )
     for run in runs:
         train_and_log_model(data_path=data_path, params=run.data.params)
@@ -71,19 +70,18 @@ def run(data_path, log_top):
     # mlflow.register_model( ... )
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data_path",
         default="./output",
-        help="the location where the processed NYC taxi trip data was saved."
+        help="the location where the processed NYC taxi trip data was saved.",
     )
     parser.add_argument(
         "--top_n",
         default=5,
         type=int,
-        help="the top 'top_n' models will be evaluated to decide which model to promote."
+        help="the top 'top_n' models will be evaluated to decide which model to promote.",
     )
     args = parser.parse_args()
 

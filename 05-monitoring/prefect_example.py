@@ -1,51 +1,41 @@
 import json
 import os
 import pickle
-from datetime import datetime
 
 import pandas
+from prefect import flow, task
+from pymongo import MongoClient
 import pyarrow.parquet as pq
+
 from evidently import ColumnMapping
+
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import DataDriftTab, RegressionPerformanceTab
+
 from evidently.model_profile import Profile
 from evidently.model_profile.sections import (
     DataDriftProfileSection,
     RegressionPerformanceProfileSection,
 )
-from prefect import flow, task
-from pymongo import MongoClient
-
-MONGO_CLIENT_ADDRESS = "mongodb://localhost:27017/"
-MONGO_DATABASE = "prediction_service"
-PREDICTION_COLLECTION = "data"
-REPORT_COLLECTION = "report"
-REFERENCE_DATA_FILE = "green_tripdata_2021-03to04.parquet"  # Modify this for Q7
-TARGET_DATA_FILE = "target.csv"
-MODEL_FILE = os.getenv(
-    "MODEL_FILE", "../prediction_service/lin_reg_V2.bin"
-)  # Modify this for Q7
 
 
 @task
 def upload_target(filename):
-    client = MongoClient(MONGO_CLIENT_ADDRESS)
-    collection = client.get_database(MONGO_DATABASE).get_collection(
-        PREDICTION_COLLECTION
-    )
+    client = MongoClient("mongodb://localhost:27018/")
+    collection = client.get_database("prediction_service").get_collection("data")
     with open(filename) as f_target:
         for line in f_target.readlines():
             row = line.split(",")
             collection.update_one({"id": row[0]}, {"$set": {"target": float(row[1])}})
+    client.close()
 
 
 @task
 def load_reference_data(filename):
+    MODEL_FILE = os.getenv("MODEL_FILE", "./prediction_service/lin_reg.bin")
     with open(MODEL_FILE, "rb") as f_in:
         dv, model = pickle.load(f_in)
-    reference_data = (
-        pq.read_table(filename).to_pandas().sample(n=5000, random_state=42)
-    )  # Monitoring for 1st 5000 records
+    reference_data = pq.read_table(filename).to_pandas()
     # Create features
     reference_data["PU_DO"] = (
         reference_data["PULocationID"].astype(str)
@@ -71,21 +61,18 @@ def load_reference_data(filename):
 
 @task
 def fetch_data():
-    client = MongoClient(MONGO_CLIENT_ADDRESS)
-    data = (
-        client.get_database(MONGO_DATABASE).get_collection(PREDICTION_COLLECTION).find()
-    )
+    client = MongoClient("mongodb://localhost:27018/")
+    data = client.get_database("prediction_service").get_collection("data").find()
     df = pandas.DataFrame(list(data))
     return df
 
 
 @task
 def run_evidently(ref_data, data):
-    ref_data.drop(["ehail_fee"], axis=1, inplace=True)
+    ref_data.drop("ehail_fee", axis=1, inplace=True)
     data.drop(
         "ehail_fee", axis=1, inplace=True
     )  # drop empty column (until Evidently will work with it properly)
-
     profile = Profile(
         sections=[DataDriftProfileSection(), RegressionPerformanceProfileSection()]
     )
@@ -106,31 +93,27 @@ def run_evidently(ref_data, data):
 
 @task
 def save_report(result):
-    """Save evidendtly profile for ride prediction to mongo server"""
-
-    client = MongoClient(MONGO_CLIENT_ADDRESS)
-    collection = client.get_database(MONGO_DATABASE).get_collection(REPORT_COLLECTION)
-    collection.insert_one(result)
+    client = MongoClient("mongodb://localhost:27018/")
+    client.get_database("prediction_service").get_collection("report").insert_one(
+        result[0]
+    )
 
 
 @task
-def save_html_report(result, filename_suffix=None):
-    """Create evidently html report file for ride prediction"""
-
-    if filename_suffix is None:
-        filename_suffix = datetime.now().strftime("%Y-%m-%d-%H-%M")
-
-    result.save(f"ride_prediction_drift_report_{filename_suffix}.html")
+def save_html_report(result):
+    result[1].save("evidently_report_example.html")
 
 
 @flow
 def batch_analyze():
-    upload_target(TARGET_DATA_FILE)
-    ref_data = load_reference_data(REFERENCE_DATA_FILE).result()
-    data = fetch_data().result()
-    profile, dashboard = run_evidently(ref_data, data).result()
-    save_report(profile)
-    save_html_report(dashboard)
+    upload_target("target.csv")
+    ref_data = load_reference_data(
+        "./evidently_service/datasets/green_tripdata_2021-01.parquet"
+    )
+    data = fetch_data()
+    result = run_evidently(ref_data, data)
+    save_report(result)
+    save_html_report(result)
 
 
 batch_analyze()
