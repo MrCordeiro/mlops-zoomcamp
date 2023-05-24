@@ -1,7 +1,6 @@
-## Homework
+# Homework
 
 The goal of this homework is to train a simple model for predicting the duration of a ride - similar to what we did in this module.
-
 
 ## Q1. Downloading the data
 
@@ -15,20 +14,18 @@ Read the data for January. How many columns are there?
 * 16
 * 17
 * 18
-* 19
-
+* 19 (Correct answer)
 
 ## Q2. Computing duration
 
-Now let's compute the `duration` variable. It should contain the duration of a ride in minutes. 
+Now let's compute the `duration` variable. It should contain the duration of a ride in minutes.
 
 What's the standard deviation of the trips duration in January?
 
 * 41.45
-* 46.45
+* 46.45 (Correct answer)
 * 51.45
 * 56.45
-
 
 ## Q3. Dropping outliers
 
@@ -39,15 +36,14 @@ What fraction of the records left after you dropped the outliers?
 * 90%
 * 92%
 * 95%
-* 98%
-
+* 98% (Correct answer)
 
 ## Q4. One-hot encoding
 
-Let's apply one-hot encoding to the pickup and dropoff location IDs. We'll use only these two features for our model. 
+Let's apply one-hot encoding to the pickup and drop-off location IDs. We'll use only these two features for our model.
 
 * Turn the dataframe into a list of dictionaries
-* Fit a dictionary vectorizer 
+* Fit a dictionary vectorizer
 * Get a feature matrix from it
 
 What's the dimensionality of this matrix (number of columns)?
@@ -55,32 +51,30 @@ What's the dimensionality of this matrix (number of columns)?
 * 2
 * 155
 * 345
-* 515
+* 515 (Correct answer)
 * 715
-
 
 ## Q5. Training a model
 
-Now let's use the feature matrix from the previous step to train a model. 
+Now let's use the feature matrix from the previous step to train a model.
 
-* Train a plain linear regression model with default parameters 
+* Train a plain linear regression model with default parameters
 * Calculate the RMSE of the model on the training data
 
 What's the RMSE on train?
 
-* 6.99
+* 6.99 (Correct answer)
 * 11.99
 * 16.99
 * 21.99
 
-
 ## Q6. Evaluating the model
 
-Now let's apply this model to the validation dataset (February 2022). 
+Now let's apply this model to the validation dataset (February 2022).
 
 What's the RMSE on validation?
 
-* 7.79
+* 7.79 (Correct answer)
 * 12.79
 * 17.79
 * 22.79
@@ -91,9 +85,8 @@ What's the RMSE on validation?
 * You can submit your solution multiple times. In this case, only the last submission will be used
 * If your answer doesn't match options exactly, select the closest one
 
-
 ## Deadline
 
-The deadline for submitting is 23 May 2023 (Tuesday), 23:00 CEST (Berlin time). 
+The deadline for submitting is 23 May 2023 (Tuesday), 23:00 CEST (Berlin time).
 
 After that, the form will be closed.
