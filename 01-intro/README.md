@@ -8,23 +8,21 @@ Instructor: Alexey Grigorev
   <img src="images/thumbnail-1-01.jpg">
 </a>
 
-
-
 ## 1.2 Environment preparation
 
-**Note**: You don't have to rent an instance in the cloud. You can follow the same instructions 
-for setting up your local environment. 
+**Note**: You don't have to rent an instance in the cloud. You can follow the same instructions
+for setting up your local environment.
 
 <a href="https://www.youtube.com/watch?v=IXSiYkP23zo&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
   <img src="images/thumbnail-1-02.jpg">
 </a>
 
-
-Code:
+Code: [01-intro/duration-prediction.ipynb]
 
 Recommended development environment: Linux
 
 ### Step 1: Download and install the Anaconda distribution of Python
+
 ```sh
 wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
 bash Anaconda3-2022.05-Linux-x86_64.sh
@@ -88,15 +86,13 @@ Save it and run the following to make sure the changes are applied:
 source ~/.bashrc
 ```
 
-
 ### Step 5: Run Docker
 
 ```sh
 docker run hello-world
 ```
 
-If you get `docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix /var/run/docker.sock: connect: permission denied.` error, restart your VM instance. 
-
+If you get `docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix /var/run/docker.sock: connect: permission denied.` error, restart your VM instance.
 
 **Note**: If you get `It is required that your private key files are NOT accessible by others. This private key will be ignored.` error, you should change permits on the downloaded file to protect your private key:
 
@@ -107,7 +103,7 @@ chmod 400 name-of-your-private-key-file.pem
 ## 1.3 (Optional) Training a ride duration prediction model
 
 **Note**: The NYC taxi data is now in parquet format, not CSV.
-Here's a [video](https://www.youtube.com/watch?v=r94QjpX9vSE&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK) that explains how to 
+Here's a [video](https://www.youtube.com/watch?v=r94QjpX9vSE&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK) that explains how to
 read parquet data.
 
 <a href="https://www.youtube.com/watch?v=iRunifGSHFc&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
@@ -118,14 +114,11 @@ Links:
 
 * [Notebook](duration-prediction.ipynb)
 
-
 ## 1.4 Course overview
 
 <a href="https://www.youtube.com/watch?v=teP9KWkP6SM&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
   <img src="images/thumbnail-1-04.jpg">
 </a>
-
-
 
 ## 1.5 MLOps maturity model
 
@@ -133,16 +126,13 @@ Links:
   <img src="images/thumbnail-1-05.jpg">
 </a>
 
-Links: 
+Links:
 
 * [MLOps Maturity model](https://docs.microsoft.com/en-us/azure/architecture/example-scenario/mlops/mlops-maturity-model)
-
-
 
 ## 1.6 Homework
 
 More information [here](../cohorts/2023/01-intro/homework.md).
-
 
 ## Notes
 
@@ -160,7 +150,7 @@ Did you take notes? Add them here:
   * [Docker cheatsheet](https://gist.github.com/ziritrion/1842c8a4c4851602a8733bba19ab6050)
   * [Conda cheatsheet](https://gist.github.com/ziritrion/8024025672ea92b8bdeb320d6015aa0d)
   * [Git cheatsheet](https://gist.github.com/ziritrion/d73ca65bf4d19c79ca842a55853cb962)
-  * [Python and data libraries cheatseet](https://gist.github.com/ziritrion/9b80e47956adc0f20ecce209d494cd0a)
+  * [Python and data libraries cheatsheet](https://gist.github.com/ziritrion/9b80e47956adc0f20ecce209d494cd0a)
 * [Cloud server setup using Deploifai (on AWS, Azure, or GCP) by 98sean98](https://github.com/98sean98/mlops-zoomcamp/blob/main/01-intro/deploifai-server/readme.md)
 * [Notes from first lesson by Neimv](https://gitlab.com/neimv/mlops/-/blob/main/lessons_weeks/notes_1.md)
 * [Course preliminaries (jupyterbook) by particle1331](https://particle1331.github.io/ok-transformer/nb/mlops/01-intro.html)
