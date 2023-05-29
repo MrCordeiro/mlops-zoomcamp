@@ -11,7 +11,7 @@ data/
 venv
 .idea
 **/artifacts/
-**/models/
+models/
 
 __pycache__/
 **.env
@@ -21,3 +21,6 @@ __pycache__/
 
 # VS Code
 .vscode/
+
+# Exclude gitkeep
+!.gitkeep
