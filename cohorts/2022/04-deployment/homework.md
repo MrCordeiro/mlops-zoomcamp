@@ -1,9 +1,8 @@
 ## 4.8 Homework
 
-In this homework, we'll deploy the ride duration model in batch mode. Like in homework 1 and 3, we'll use the FHV data. 
+In this homework, we'll deploy the ride duration model in batch mode. Like in homework 1 and 3, we'll use the FHV data.
 
 You'll find the starter code in the [homework](https://github.com/DataTalksClub/mlops-zoomcamp/blob/74324e4d3759e9712ce406b8b30c77cff66e6cef/04-deployment/homework/) directory.
-
 
 ## Q1. Notebook
 
@@ -20,10 +19,9 @@ What's the mean predicted duration for this dataset?
 * 21.19
 * 26.19
 
-
 ## Q2. Preparing the output
 
-Like in the course videos, we want to prepare the dataframe with the output. 
+Like in the course videos, we want to prepare the dataframe with the output.
 
 First, let's create an artificial `ride_id` column:
 
@@ -31,7 +29,7 @@ First, let's create an artificial `ride_id` column:
 df['ride_id'] = f'{year:04d}/{month:02d}_' + df.index.astype('str')
 ```
 
-Next, write the ride id and the predictions to a dataframe with results. 
+Next, write the ride id and the predictions to a dataframe with results.
 
 Save it as parquet:
 
@@ -52,22 +50,20 @@ What's the size of the output file?
 * 39M
 
 Make sure you use the snippet above for saving the file. It should contain only these two columns. For this question, don't change the
-dtypes of the columns and use pyarrow, not fastparquet. 
-
+dtypes of the columns and use pyarrow, not fastparquet.
 
 ## Q3. Creating the scoring script
 
-Now let's turn the notebook into a script. 
+Now let's turn the notebook into a script.
 
 Which command you need to execute for that?
-
 
 ## Q4. Virtual environment
 
 Now let's put everything into a virtual environment. We'll use pipenv for that.
 
 Install all the required libraries. Pay attention to the Scikit-Learn version:
-check the starter notebook for details. 
+check the starter notebook for details.
 
 After installing the libraries, pipenv creates two files: `Pipfile`
 and `Pipfile.lock`. The `Pipfile.lock` file keeps the hashes of the
@@ -75,15 +71,14 @@ dependencies we use for the virtual env.
 
 What's the first hash for the Scikit-Learn dependency?
 
-
 ## Q5. Parametrize the script
 
-Let's now make the script configurable via CLI. We'll create two 
+Let's now make the script configurable via CLI. We'll create two
 parameters: year and month.
 
-Run the script for March 2021. 
+Run the script for March 2021.
 
-What's the mean predicted duration? 
+What's the mean predicted duration?
 
 * 11.29
 * 16.29
@@ -92,11 +87,10 @@ What's the mean predicted duration?
 
 Hint: just add a print statement to your script.
 
+## Q6. Docker contaner
 
-## Q6. Docker contaner 
-
-Finally, we'll package the script in the docker container. 
-For that, you'll need to use a base image that we prepared. 
+Finally, we'll package the script in the docker container.
+For that, you'll need to use a base image that we prepared.
 
 This is how it looks like:
 
@@ -124,26 +118,23 @@ This image already has a pickle file with a dictionary vectorizer
 and a model. You will need to use them.
 
 Important: don't copy the model to the docker image. You will need
-to use the pickle file already in the image. 
+to use the pickle file already in the image.
 
 Now run the script with docker. What's the mean predicted duration
-for April 2021? 
-
+for April 2021?
 
 * 9.96
 * 16.55
 * 25.96
 * 36.55
 
-
 ## Bonus: upload the result to the cloud (Not graded)
 
-Just printing the mean duration inside the docker image 
-doesn't seem very practical. Typically, after creating the output 
+Just printing the mean duration inside the docker image
+doesn't seem very practical. Typically, after creating the output
 file, we upload it to the cloud storage.
 
 Modify your code to upload the parquet file to S3/GCS/etc.
-
 
 ## Submit the results
 
@@ -155,11 +146,9 @@ Modify your code to upload the parquet file to S3/GCS/etc.
 
 The deadline for submitting is 27 June 2022 (Monday) 23:00 CEST. After that, the form will be closed.
 
-
 ## Solution
 
 After the deadline, we'll post the solution here
-
 
 ## Publishing the image to dockerhub
 
@@ -170,4 +159,3 @@ docker build -t mlops-zoomcamp-model:v1 .
 docker tag mlops-zoomcamp-model:v1 agrigorev/zoomcamp-model:mlops-3.9.7-slim
 docker push agrigorev/zoomcamp-model:mlops-3.9.7-slim
 ```
-
