@@ -1,16 +1,12 @@
 # 2. Experiment tracking and model management
 
-
 * [Slides](https://drive.google.com/file/d/1YtkAtOQS3wvY7yts_nosVlXrLQBq5q37/view?usp=sharing)
-
 
 ## 2.1 Experiment tracking intro
 
 <a href="https://www.youtube.com/watch?v=MiA7LQin9c8&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
   <img src="images/thumbnail-2-01.jpg">
 </a>
-
-
 
 ## 2.2 Getting started with MLflow
 
@@ -24,14 +20,11 @@ But if you set up a VM in the previous module, you can keep using it
 and use the usual Jupyter from your browser. There's no significant
 difference between using Jupyter with VS code and without
 
-
 ## 2.3 Experiment tracking with MLflow
 
 <a href="https://www.youtube.com/watch?v=iaJz-T7VWec&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
   <img src="images/thumbnail-2-03.jpg">
 </a>
-
-
 
 ## 2.4 Model management
 
@@ -39,14 +32,11 @@ difference between using Jupyter with VS code and without
   <img src="images/thumbnail-2-04.jpg">
 </a>
 
-
-
 ## 2.5 Model registry
 
 <a href="https://www.youtube.com/watch?v=TKHU7HAvGH8&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
   <img src="images/thumbnail-2-05.jpg">
 </a>
-
 
 ## 2.6 MLflow in practice
 
@@ -54,13 +44,11 @@ difference between using Jupyter with VS code and without
   <img src="images/thumbnail-2-06.jpg">
 </a>
 
-
 ## 2.7 MLflow: benefits, limitations and alternatives
 
 <a href="https://www.youtube.com/watch?v=Lugy1JPsBRY&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK">
   <img src="images/thumbnail-2-07.jpg">
 </a>
-
 
 ## 2.7 Homework
 
@@ -69,7 +57,6 @@ More information [here](../cohorts/2023/02-experiment-tracking/homework.md).
 ## Weights & Biases Workshop
 
 More information [here](../cohorts/2023/02-experiment-tracking/wandb.md)
-
 
 ## Notes
 
