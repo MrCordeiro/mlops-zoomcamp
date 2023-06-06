@@ -1,24 +1,22 @@
-## Homework
+# Homework
 
-The goal of this homework is to get familiar with tools like MLflow for experiment tracking and 
+The goal of this homework is to get familiar with tools like MLflow for experiment tracking and
 model management.
-
 
 ## Q1. Install the package
 
 To get started with MLflow you'll need to install the appropriate Python package.
 
-For this we recommend creating a separate Python environment, for example, you can use [conda environments](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-envs), 
+For this we recommend creating a separate Python environment, for example, you can use [conda environments](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-envs),
 and then install the package there with `pip` or `conda`.
 
 Once you installed the package, run the command `mlflow --version` and check the output.
 
 What's the version that you have?
 
-
 ## Q2. Download and preprocess the data
 
-We'll use the Green Taxi Trip Records dataset to predict the amount of tips for each trip. 
+We'll use the Green Taxi Trip Records dataset to predict the amount of tips for each trip.
 
 Download the data for January, February and March 2022 in parquet format from [here](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
 
@@ -32,7 +30,7 @@ The script will:
 
 Your task is to download the datasets and then execute this command:
 
-```
+```bash
 python preprocess_data.py --raw_data_path <TAXI_DATA_FOLDER> --dest_path ./output
 ```
 
@@ -41,16 +39,15 @@ Tip: go to `02-experiment-tracking/homework/` folder before executing the comman
 So what's the size of the saved `DictVectorizer` file?
 
 * 54 kB
-* 154 kB
+* 154 kB  (Correct answer)
 * 54 MB
 * 154 MB
-
 
 ## Q3. Train a model with autolog
 
 We will train a `RandomForestRegressor` (from Scikit-Learn) on the taxi dataset.
 
-We have prepared the training script `train.py` for this exercise, which can be also found in the folder `homework`. 
+We have prepared the training script `train.py` for this exercise, which can be also found in the folder `homework`.
 
 The script will:
 
@@ -58,7 +55,7 @@ The script will:
 * train the model on the training set,
 * calculate the RMSE score on the validation set.
 
-Your task is to modify the script to enable **autologging** with MLflow, execute the script and then launch the MLflow UI to check that the experiment run was properly tracked. 
+Your task is to modify the script to enable **autologging** with MLflow, execute the script and then launch the MLflow UI to check that the experiment run was properly tracked.
 
 Tip 1: don't forget to wrap the training code with a `with mlflow.start_run():` statement as we showed in the videos.
 
@@ -69,12 +66,11 @@ What is the value of the `max_depth` parameter:
 * 4
 * 6
 * 8
-* 10
-
+* 10 (Correct answer)
 
 ## Launch the tracking server locally for MLflow
 
-Now we want to manage the entire lifecycle of our ML model. In this step, you'll need to launch a tracking server. This way we will also have access to the model registry. 
+Now we want to manage the entire lifecycle of our ML model. In this step, you'll need to launch a tracking server. This way we will also have access to the model registry.
 
 In case of MLflow, you need to:
 
@@ -83,11 +79,11 @@ In case of MLflow, you need to:
 
 You should keep the tracking server running to work on the next three exercises that use the server.
 
-
 ## Q4. Tune model hyperparameters
 
-Now let's try to reduce the validation error by tuning the hyperparameters of the `RandomForestRegressor` using `optuna`. 
-We have prepared the script `hpo.py` for this exercise. 
+Now let's try to reduce the validation error by tuning the hyperparameters of the `RandomForestRegressor` using `optuna`.
+
+We have prepared the script `hpo.py` for this exercise.
 
 Your task is to modify the script `hpo.py` and make sure that the validation RMSE is logged to the tracking server for each run of the hyperparameter optimization (you will need to add a few lines of code to the `objective` function) and run the script without passing any parameters.
 
@@ -104,14 +100,15 @@ What's the best validation RMSE that you got?
 
 * 1.85
 * 2.15
-* 2.45
+* 2.45 (Correct answer)
 * 2.85
-
 
 ## Q5. Promote the best model to the model registry
 
-The results from the hyperparameter optimization are quite good. So, we can assume that we are ready to test some of these models in production. 
-In this exercise, you'll promote the best model to the model registry. We have prepared a script called `register_model.py`, which will check the results from the previous step and select the top 5 runs. 
+The results from the hyperparameter optimization are quite good. So, we can assume that we are ready to test some of these models in production.
+
+In this exercise, you'll promote the best model to the model registry. We have prepared a script called `register_model.py`, which will check the results from the previous step and select the top 5 runs.
+
 After that, it will calculate the RMSE of those models on the test set (March 2022 data) and save the results to a new experiment called `random-forest-best-models`.
 
 Your task is to update the script `register_model.py` so that it selects the model with the lowest RMSE on the test set and registers it to the model registry.
@@ -124,10 +121,9 @@ Tips for MLflow:
 What is the test RMSE of the best model?
 
 * 1.885
-* 2.185
+* 2.185 (Correct answer)
 * 2.555
 * 2.955
-
 
 ## Q6. Model metadata
 
@@ -136,8 +132,7 @@ Now explore your best model in the model registry using UI. What information doe
 * Version number
 * Source experiment
 * Model signature
-* All the above answers are correct
-
+* All the above answers are correct (Correct answer)
 
 ## Submit the results
 
@@ -145,9 +140,8 @@ Now explore your best model in the model registry using UI. What information doe
 * You can submit your solution multiple times. In this case, only the last submission will be used
 * If your answer doesn't match options exactly, select the closest one
 
-
 ## Deadline
 
-The deadline for submitting is 4 June 2023 (Sunday), 22:00 CEST (Berlin time). 
+The deadline for submitting is 4 June 2023 (Sunday), 22:00 CEST (Berlin time).
 
 After that, the form will be closed.
