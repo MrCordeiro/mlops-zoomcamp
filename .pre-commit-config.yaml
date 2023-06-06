@@ -34,7 +34,7 @@ repos:
     rev: 'v0.0.269'
     hooks:
       - id: ruff
-        args: [--max-line-length=88]
+        args: [--line-length=88]
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.38.2
     hooks:
