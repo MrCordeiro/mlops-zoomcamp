@@ -27,5 +27,8 @@ mlruns/
 # VS Code
 .vscode/
 
+# Airflow
+airflow-webserver.pid
+
 # Exclude gitkeep
 !.gitkeep
