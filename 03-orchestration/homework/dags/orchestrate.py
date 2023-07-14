@@ -85,7 +85,28 @@ def _train_model(
         "reg_lambda": 0.011658731377413597,
         "seed": 42,
     }
+    pipeline = _build_pipeline(best_params)
 
+    with mlflow.start_run():
+        mlflow.log_params(best_params)
+        _fit_model_pipeline(df_train, df_val, pipeline)
+
+
+def _fit_model_pipeline(df_train, df_val, pipeline):
+    pipeline.fit(df_train, df_train["duration"])
+
+    y_val = df_val["duration"].values
+    y_pred = pipeline.predict(df_val.drop(columns=["duration"]))
+    rmse = mean_squared_error(y_val, y_pred, squared=False)
+    logging.info(f"RMSE: {rmse}")
+
+    # Save pipeline
+    with open(MLFLOW_ARTIFACTS_DIR / "model_pipeline.pkl", "wb") as f:
+        pickle.dump(pipeline, f)
+    mlflow.log_artifact(str(MLFLOW_ARTIFACTS_DIR / "model_pipeline.pkl"))
+
+
+def _build_pipeline(best_params):
     dv = DictVectorizer()
     feature_transformer = ColumnTransformer(
         transformers=[("dv", dv, ["PU_DO", "trip_distance"])], remainder="drop"
@@ -101,20 +122,7 @@ def _train_model(
         ]
     )
 
-    with mlflow.start_run():
-        mlflow.log_params(best_params)
-
-        pipeline.fit(df_train, df_train["duration"])
-
-        y_val = df_val["duration"].values
-        y_pred = pipeline.predict(df_val.drop(columns=["duration"]))
-        rmse = mean_squared_error(y_val, y_pred, squared=False)
-        logging.info(f"RMSE: {rmse}")
-
-        # Save pipeline
-        with open(MLFLOW_ARTIFACTS_DIR / "model_pipeline.pkl", "wb") as f:
-            pickle.dump(pipeline, f)
-        mlflow.log_artifact(str(MLFLOW_ARTIFACTS_DIR / "model_pipeline.pkl"))
+    return best_params, pipeline
 
 
 main_flow()
