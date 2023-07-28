@@ -2,9 +2,8 @@
 name = "mlops-zoomcamp"
 version = "0.1.0"
 description = "Code for my MLOps Zoomcamp's exercise submissions"
-authors = ["DataTalksClub, Fernando Cordeiro"]
+authors = ["DataTalksClub", "Fernando Cordeiro"]
 readme = "README.md"
-packages = [{include = "mlops_zoomcamp"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
